@@ -10,12 +10,14 @@ const renderPdf = async ({
   pdfOptions,
   docsifyRendererPort,
   emulateMedia,
+  puppeteerOptions
 }) => {
   const browser = await puppeteer.launch({
     defaultViewport: {
       width: 1200,
       height: 1000,
     },
+    ...puppeteerOptions
   });
   try {
     const mainMdFilenameWithoutExt = path.parse(mainMdFilename).name;
@@ -53,6 +55,7 @@ const htmlToPdf = ({
   removeTemp,
   docsifyRendererPort,
   emulateMedia,
+  puppeteerOptions
 }) => async () => {
   const { closeProcess } = require("./utils.js")({ pathToStatic, removeTemp });
   try {
@@ -63,6 +66,7 @@ const htmlToPdf = ({
       pdfOptions,
       docsifyRendererPort,
       emulateMedia,
+      puppeteerOptions
     });
   } catch (err) {
     logger.err("puppeteer renderer error:", err);
